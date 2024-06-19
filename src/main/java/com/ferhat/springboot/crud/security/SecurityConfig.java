@@ -5,14 +5,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig {
 
+    // This is the most basic method of adding users and user roles for auth.
+    //However, there is no database connection in this method, it is a very basic structure and is added manually.
+    /*
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
 
@@ -36,6 +40,16 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(ferhat, ali, cemre);
     }
+
+     */
+
+    // We are trying a second and slightly more advanced method of auth.
+    // This method is connected to the database and performs auth operations based on database data, but does not yet have any advanced encryption logic.
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
