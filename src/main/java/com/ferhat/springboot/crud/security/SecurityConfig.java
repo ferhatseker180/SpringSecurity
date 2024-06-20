@@ -47,7 +47,16 @@ public class SecurityConfig {
     // This method is connected to the database and performs auth operations based on database data, but does not yet have any advanced encryption logic.
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        // define query to retrive a user by username
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id, pw, active from members where user_id=?");
+
+        // define auth/ roles by username
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id, role from roles where user_id=?");
+
+        return jdbcUserDetailsManager;
     }
 
 
