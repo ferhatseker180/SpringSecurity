@@ -22,19 +22,19 @@ public class SecurityConfig {
 
         UserDetails ferhat = User.builder()
                 .username("ferhat")
-                .password("{noop}123456789")
+                .password("{noop}1234")
                 .roles("ADMIN", "MANAGER", "EMPLOYEE")
                 .build();
 
         UserDetails ali = User.builder()
                 .username("ali")
-                .password("{noop}1234")
+                .password("{noop}12345")
                 .roles("MANAGER", "EMPLOYEE")
                 .build();
 
         UserDetails cemre = User.builder()
                 .username("cemre")
-                .password("{noop}12")
+                .password("{noop}123456")
                 .roles("EMPLOYEE")
                 .build();
 
